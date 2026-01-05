@@ -1,17 +1,26 @@
 class Solution {
 public:
-    long long maxMatrixSum(vector<vector<int>>& mat) {
-        int mini = INT_MAX;
+    long long maxMatrixSum(vector<vector<int>>& matrix) {
         long long sum = 0;
-        int neg = 0;
-        for(int i=0; i<mat.size(); i++){
-            for(int j=0; j<mat[0].size(); j++){
-                mini = min(mini,abs(mat[i][j]));
-                sum += abs(mat[i][j]);
-                if(mat[i][j]<0) neg++;
+        int minAbsolute = INT_MAX;
+        int negative = 0;
+
+        for (const vector<int>& nums : matrix) {
+            for (int num : nums) {
+                if (num < 0) {
+                    negative++;
+                }
+
+                minAbsolute = min(abs(num), minAbsolute);
+                sum += abs(num);
             }
         }
-        if(neg%2) sum -= (2*mini);
-        return sum;
+        
+        if (negative % 2 == 0) {
+            return sum;
+        }
+        else {
+            return sum - 2 * minAbsolute;
+        }
     }
 };
