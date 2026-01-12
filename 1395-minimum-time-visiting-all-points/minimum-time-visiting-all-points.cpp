@@ -2,14 +2,14 @@ class Solution {
 public:
     int minTimeToVisitAllPoints(vector<vector<int>>& points) {
         int n = points.size();
-        int inx = points[0][0];
-        int iny = points[0][1];
         int ans = 0;
-        for(int i=1; i<n; i++){
-            int a = abs(inx-points[i][0]);
-            int b = abs(iny-points[i][1]);
-            inx = points[i][0];
-            iny = points[i][1];
+        for(int i=0; i<n-1; i++){
+            int x1 = points[i][0];
+            int y1 = points[i][1];
+            int x2 = points[i+1][0];
+            int y2 = points[i+1][1];
+            int a = abs(x1-x2);
+            int b = abs(y1-y2);
             ans += max(a,b);
             // cout<<ans<<" ";
         }
