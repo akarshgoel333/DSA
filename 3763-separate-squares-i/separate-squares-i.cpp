@@ -1,33 +1,40 @@
 class Solution {
 public:
+    bool check(vector<vector<int>>& squares, double total, double mid){
+        double bott = 0.0;
+        for(auto &sq: squares){
+            double y = sq[1];
+            double l = sq[2];
+            if(mid >= (y+l)) bott += l*l;
+            else if(mid > y) bott += (mid-y)*l;
+        }
+        return (bott >= (total)/2.0);
+    }
     double separateSquares(vector<vector<int>>& squares) {
-        int n = squares.size();
-        double low = 1e9;
-        double high = -1;
-        for(int i=0; i<n; i++){
-            low = min(low,(double)squares[i][1]);
-            high = max(high,(double)(squares[i][1]+squares[i][2]));
+        double low = INT_MAX;
+        double high = INT_MIN;
+        double total = 0.0;
+        for(auto &sq : squares){
+            double x = sq[0];
+            double y = sq[1];
+            double l = sq[2];
+
+            total += l*l;
+            
+            low = min(low,y);
+            high = max(high,y+l);
         }
         
-        while(high-low>1e-6){
-            double mid = low + (high-low)/2;
-            double upper = 0;
-            double lower = 0;
-            for(int i=0; i<n; i++){
-                if(mid-squares[i][1]<=squares[i][2] && mid-squares[i][1]>=0){
-                    upper += 1.0*(squares[i][1]+squares[i][2]-mid)*squares[i][2];
-                    lower += 1.0*(mid-squares[i][1])*squares[i][2];
-                }
-                else if(mid >= squares[i][1] + squares[i][2]){
-                lower += 1.0*squares[i][2]*squares[i][2];
-                }
-                else upper += 1.0*squares[i][2]*squares[i][2];
+        double res = 0.0;
+        while(high-low>1e-5){
+            double mid = low + (high-low)/2.0;
+            
+            if(check(squares,total,mid)==true){
+                res = mid;
+                high = mid;
             }
-
-            if(upper>lower) low = mid;
-            else high = mid;
-            cout<<mid<<" ";
+            else low = mid;
         }
-        return (low+high)/2;
+        return res;
     }
 };
