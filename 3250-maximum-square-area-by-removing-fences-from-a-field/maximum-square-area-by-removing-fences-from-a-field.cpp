@@ -1,34 +1,37 @@
 class Solution {
 public:
     int maximizeSquareArea(int m, int n, vector<int>& hF, vector<int>& vF) {
-        int MOD = 1e9 +7;
-        if(m==n){
-            long long ans = (long long)(m-1)*(m-1)%MOD;
-            return (int)ans;
-        }
-        unordered_set<int>hcnt;
-        hcnt.insert(m-1);
-        for(int i=0; i<hF.size(); i++){
-            for(int j=0; j<hF.size(); j++){
-                if(i!=j) hcnt.insert(abs(hF[i]-hF[j]));
+        const int MOD = 1e9 + 7;
+
+        // Add borders
+        hF.push_back(1);
+        hF.push_back(m);
+        vF.push_back(1);
+        vF.push_back(n);
+
+        sort(hF.begin(), hF.end());
+        sort(vF.begin(), vF.end());
+
+        unordered_set<long long> hcnt;
+
+        for (int i = 0; i < hF.size(); i++) {
+            for (int j = i + 1; j < hF.size(); j++) {
+                hcnt.insert((long long)hF[j] - hF[i]);
             }
-            hcnt.insert(hF[i]-1);
-            hcnt.insert(m-hF[i]);
         }
+
         long long ans = -1;
-        if(hcnt.count(n-1)){
-            ans = (long long)(n-1)*(n-1)%MOD;
-            return (int)ans;
-        }
-        for(int i=0; i<vF.size(); i++){
-            for(int j=0; j<vF.size(); j++){
-                if(i!=j && hcnt.count(abs(vF[i]-vF[j]))) ans = max(ans,(long long)abs(vF[i]-vF[j]));
+
+        for (int i = 0; i < vF.size(); i++) {
+            for (int j = i + 1; j < vF.size(); j++) {
+                long long d = (long long)vF[j] - vF[i];
+                if (hcnt.count(d)) {
+                    ans = max(ans, d);
+                }
             }
-            if(hcnt.count(vF[i]-1)) ans = max(ans,(long long)vF[i]-1);
-            if(hcnt.count(n-vF[i])) ans = max(ans,(long long)n-vF[i]);
         }
-        if(ans==-1) return -1;
-        ans = (long long)ans*ans%MOD;
-        return (int)ans;
+
+        if (ans == -1) return -1;
+        return (int)((ans % MOD) * (ans % MOD) % MOD);
     }
 };
