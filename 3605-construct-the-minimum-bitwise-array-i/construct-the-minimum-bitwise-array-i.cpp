@@ -1,6 +1,7 @@
 class Solution {
 public:
     int check(int num){
+        if(num==2) return -1;
         int i=1;
         int ans = -1;
         while(i<=num){
