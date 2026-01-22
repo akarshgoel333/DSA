@@ -14,13 +14,9 @@ public:
                 }
             }
             nums[pos]=sum;
-            nums[pos+1]=INT_MAX;
-            for(int i=pos+1; i<n-1; i++){
-                swap(nums[i],nums[i+1]);
-            }
+            nums.erase(nums.begin() + (pos + 1));
             n--;
             flag = is_sorted(nums.begin(), nums.end());
-            cout<<pos<<" ";
         }
         return ans;
     }
