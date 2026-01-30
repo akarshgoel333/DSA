@@ -2,13 +2,11 @@ class Solution {
 public:
     int countPairs(vector<int>& nums, int target) {
         int n = nums.size();
-        int ans = 0;
-        sort(nums.begin(),nums.end());
+        int ans=0;
         for(int i=0; i<n-1; i++){
-            int tgt = target-nums[i];
-            int a = lower_bound(nums.begin(),nums.end(),tgt) - nums.begin();
-            if(a>i) ans += (a-i-1);
-            cout<<a<<" ";
+            for(int j=i+1; j<n; j++){
+                if(nums[i]+nums[j]<target) ans++;
+            }
         }
         return ans;
     }
