@@ -6,9 +6,6 @@ public:
         for(int i=0; i<=n-k; i++){
             sbst.insert(s.substr(i,k));
         }
-        cout<<sbst.size();
-        long long m = pow(2,k);
-        if(sbst.size()==m) return true;
-        return false;
+        return sbst.size()== (1<<k);
     }
 };
