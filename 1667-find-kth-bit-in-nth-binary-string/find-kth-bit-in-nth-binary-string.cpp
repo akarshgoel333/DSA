@@ -1,20 +1,14 @@
 class Solution {
 public:
     char findKthBit(int n, int k) {
-        string str = "";
-        str += '0';
-        for(int i=1; i<n; i++){
-            int len = str.length();
-            string s = str;
-            reverse(s.begin(),s.end());
-            int j=0;
-            while(j<s.length()){
-                if(s[j]=='1') s[j]='0';
-                else s[j]='1';
-                j++;
-            }
-            str = str + '1' + s;
+        if(n==1) return '0';
+        int len = (1 << n) - 1;
+        if(k == ceil(len/2.0)) return '1';
+        else if(k < ceil(len/2.0)){
+            return findKthBit(n-1,k);
         }
-        return str[k-1];
+        else{
+            return findKthBit(n-1,len-k+1)=='0'?'1':'0';
+        }
     }
 };
