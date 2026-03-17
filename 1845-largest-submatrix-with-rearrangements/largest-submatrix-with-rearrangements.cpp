@@ -1,29 +1,28 @@
 class Solution {
 public:
     int largestSubmatrix(vector<vector<int>>& matrix) {
-        int n = matrix.size();
-        int m = matrix[0].size();
-        vector<pair<int,int>> prev;
+        int m = matrix.size();
+        int n = matrix[0].size();
+        vector<int> prevRow = vector(n, 0);
         int ans = 0;
-        for(int i=0; i<n; i++){
-            vector<pair<int,int>> curr;
-            vector<bool> seen(m,false);
-            for(auto [h,col]: prev){
-                if(matrix[i][col]==1){
-                    curr.push_back({h+1,col});
-                    seen[col]=true;
+        
+        for (int row = 0; row < m; row++) {
+            vector<int> currRow = matrix[row];
+            for (int col = 0; col < n; col++) {
+                if (currRow[col] != 0) {
+                    currRow[col] += prevRow[col];
                 }
             }
-            for(int j=0; j<m; j++){
-                if(seen[j]==false && matrix[i][j]==1) curr.push_back({1,j});
+            
+            vector<int> sortedRow = currRow;
+            sort(sortedRow.begin(), sortedRow.end(), greater());
+            for (int i = 0; i < n; i++) {
+                ans = max(ans, sortedRow[i] * (i + 1));
             }
-            for(int i=0; i<curr.size(); i++){
-                int H = curr[i].first;
-                int B = i+1;
-                ans = max(ans, H*B);
-            }
-            prev = curr;
+            
+            prevRow = currRow;
         }
+
         return ans;
     }
 };
