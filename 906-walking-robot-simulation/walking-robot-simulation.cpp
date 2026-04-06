@@ -9,18 +9,19 @@ public:
         int x = 0;
         int y = 0;
         int maxD = 0;
-        pair<int,int>dir = {0,1};
+        vector<pair<int,int>>dir = {{0,1},{1,0},{0,-1},{-1,0}};
+        int d = 0;
         for(int i=0; i<commands.size(); i++){
             if(commands[i]==-2){
-                dir = {-dir.second,dir.first};
+                d = (d+3)%4;
             }
             else if(commands[i]==-1){
-                dir = {dir.second,-dir.first};
+                d = (d+1)%4;
             }
             else{
                 for(int step=0; step<commands[i]; step++){
-                    int newx = x+dir.first;
-                    int newy = y+dir.second;
+                    int newx = x+dir[d].first;
+                    int newy = y+dir[d].second;
                     string nxtstep = to_string(newx)+" "+to_string(newy);
                     if(obz.find(nxtstep) != obz.end()){
                         break;
