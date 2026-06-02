@@ -1,21 +1,21 @@
 class Solution {
-public:
-    int earliestFinishTime(vector<int>& lst, vector<int>& ld, vector<int>& wst, vector<int>& wd) {
+    int solve(vector<int>& lst, vector<int>& ld, vector<int>& wst, vector<int>& wd){
         int n = lst.size();
         int m = wst.size();
         int ans = INT_MAX;
+        int finish1 = INT_MAX;
         for(int i=0; i<n; i++){
-            for(int j=0; j<m; j++){
-                int route1 = lst[i]+ld[i];
-                if(wst[j]<=route1) route1 += wd[j];
-                else route1 = wst[j]+wd[j];
-
-                int route2 = wst[j]+wd[j];
-                if(lst[i]<=route2) route2 += ld[i];
-                else route2 = lst[i]+ld[i];
-                ans = min({ans,route1,route2});
-            }
+            finish1 = min(finish1,lst[i]+ld[i]);
+        }
+        for(int j=0; j<m; j++){
+            ans = min(ans, max(finish1,wst[j])+wd[j]);
         }
         return ans;
+    }
+public:
+    int earliestFinishTime(vector<int>& lst, vector<int>& ld, vector<int>& wst, vector<int>& wd) {
+        int lant = solve(lst,ld,wst,wd);
+        int watt = solve(wst,wd,lst,ld);
+        return min(lant,watt);
     }
 };
