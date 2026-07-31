@@ -7,8 +7,7 @@ public:
         }
         sort(freq.rbegin(),freq.rend());
         int ans = 0;
-        for(int i=0; i<26; i++){
-            if(freq[i]==0) break;
+        for(int i=0; i<26 && freq[i]!=0; i++){
             int push = (i/8)+1;
             ans += (freq[i]*push);
         }
