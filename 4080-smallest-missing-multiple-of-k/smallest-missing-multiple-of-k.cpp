@@ -2,11 +2,10 @@ class Solution {
 public:
     int missingMultiple(vector<int>& nums, int k) {
         set<int>s(nums.begin(),nums.end());
-        int i=1;
-        while(true){
-            if(!s.count(k*i)) return k*i;
-            i++;
+        int i=k;
+        for(i=k; i<101; i=i+k){
+            if(!s.count(i)) return i;
         }
-        return 0;
+        return i;
     }
 };
