@@ -14,12 +14,10 @@ public:
         int first = -1, last = -1;
         ListNode* curr = head->next;
         ListNode* prev = head;
-        int crt = 0;
         int i = 1;
         int mini = INT_MAX;
         while(curr->next){
             if((curr->val < prev->val && curr->val < curr->next->val) || (curr->val > prev->val && curr->val > curr->next->val)){
-                crt++;
                 if(first==-1) first=i;
                 if(last!=-1 && i-last<mini) mini = i-last;
                 last = i;
@@ -28,7 +26,7 @@ public:
             prev = curr;
             curr = curr->next;
         }
-        if(crt<2) return {-1,-1};
+        if(first==last) return {-1,-1};
         int maxi = last-first;
         return {mini,maxi};
     }
