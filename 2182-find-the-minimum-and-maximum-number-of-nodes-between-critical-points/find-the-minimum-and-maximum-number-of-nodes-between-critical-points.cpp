@@ -17,9 +17,10 @@ public:
         int i = 1;
         int mini = INT_MAX;
         while(curr->next){
-            if((curr->val < prev->val && curr->val < curr->next->val) || (curr->val > prev->val && curr->val > curr->next->val)){
+            bool flag = (curr->val < prev->val && curr->val < curr->next->val) || (curr->val > prev->val && curr->val > curr->next->val);
+            if(flag){
                 if(first==-1) first=i;
-                if(last!=-1 && i-last<mini) mini = i-last;
+                else mini = min(mini,i-last);
                 last = i;
             }
             i++;
