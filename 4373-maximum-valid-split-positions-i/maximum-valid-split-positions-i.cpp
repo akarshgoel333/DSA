@@ -2,9 +2,10 @@ class Solution {
 public:
     int maxValidSplits(vector<int>& nums) {
         int n = nums.size();
+        vector<int>arr;
         int sc = 0;
         for(int i=-1; i<n; i++){
-            vector<int>arr;
+            arr.clear();
             for(int j=0; j<n; j++){
                 if(i==j) continue;
                 else arr.push_back(nums[j]);
