@@ -1,25 +1,22 @@
 class Solution {
 public:
-    void validBracks(int left, int right, int n, vector<string> &ans, string &temp){
-        if(left+right==(2*n)){
-            ans.push_back(temp);
+    void solve(vector<string> &ans, string s, int left, int right, int &n){
+        if(left==n){
+            while(right<n){
+                s += ')';
+                right++;
+            }
+            ans.push_back(s);
             return;
         }
-        if(left<n){
-            temp.push_back('(');
-            validBracks(left+1,right,n,ans,temp);
-            temp.pop_back();
-        }
-        if(left>right){
-            temp.push_back(')');
-            validBracks(left,right+1,n,ans,temp);
-            temp.pop_back();
-        }
+
+        solve(ans,s + '(',left+1,right,n);
+        if(left>right) solve(ans,s + ')',left,right+1,n);
     }
     vector<string> generateParenthesis(int n) {
         vector<string> ans;
-        string temp;
-        validBracks(0,0,n,ans,temp);
+        string s = "";
+        solve(ans,s,0,0,n);
         return ans;
     }
 };
